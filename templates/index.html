@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Real-Time Weather Tracker - Get current weather information for any city."
+    >
+
+    <title>Weather Tracker</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+
+<body class="weather-clouds">
+
+<div class="page-overlay"></div>
+
+
+<div class="container">
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <header class="header">
+
+        <div class="header-content">
+
+            <div class="header-logo">
+                <span>🌤️</span>
+            </div>
+
+            <div class="header-text">
+
+                <h1>
+                    Real-Time Weather Tracker
+                </h1>
+
+                <p>
+                    Get the latest weather updates for your city
+                </p>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         SEARCH
+    ========================== -->
+
+    <section class="search-area">
+
+        <div class="search-wrapper">
+
+            <span class="location-icon">
+                📍
+            </span>
+
+            <input
+                type="text"
+                id="cityInput"
+                class="search-box"
+                placeholder="Enter city name..."
+                value="Ahmedabad"
+                autocomplete="off"
+            >
+
+            <button
+                id="clearButton"
+                class="clear-button"
+                type="button"
+                aria-label="Clear city"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <button
+            id="searchButton"
+            class="search-btn"
+            type="button"
+        >
+
+            <span class="search-icon">
+                🔍
+            </span>
+
+            <span>
+                Search
+            </span>
+
+        </button>
+
+    </section>
+
+
+    <!-- =========================
+         ERROR
+    ========================== -->
+
+    <div
+        id="error"
+        class="error"
+    ></div>
+
+
+    <!-- =========================
+         MAIN WEATHER CARD
+    ========================== -->
+
+    <main class="weather-card">
+
+
+        <!-- LEFT SIDE -->
+
+        <div class="main-weather">
+
+            <div class="weather-visual">
+
+                <img
+                    id="weatherIcon"
+                    class="weather-icon"
+                    src="https://openweathermap.org/img/wn/01d@4x.png"
+                    alt="Weather"
+                >
+
+            </div>
+
+
+            <div class="weather-main-info">
+
+                <div
+                    id="city"
+                    class="city"
+                >
+                    Ahmedabad
+                </div>
+
+
+                <div
+                    id="country"
+                    class="country"
+                >
+                    🇮🇳 IN
+                </div>
+
+
+                <div
+                    id="temperature"
+                    class="temperature"
+                >
+                    --°C
+                </div>
+
+
+                <div
+                    id="condition"
+                    class="condition"
+                >
+                    Loading...
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- DIVIDER + RIGHT DETAILS -->
+
+        <div class="details">
+
+            <!-- Feels Like -->
+
+            <div class="detail">
+
+                <div class="detail-left">
+
+                    <span class="detail-icon">
+                        🌡
+                    </span>
+
+                    <span class="detail-label">
+                        Feels Like
+                    </span>
+
+                </div>
+
+
+                <span
+                    id="feels"
+                    class="detail-value"
+                >
+                    --°C
+                </span>
+
+            </div>
+
+
+            <!-- Humidity -->
+
+            <div class="detail">
+
+                <div class="detail-left">
+
+                    <span class="detail-icon">
+                        💧
+                    </span>
+
+                    <span class="detail-label">
+                        Humidity
+                    </span>
+
+                </div>
+
+
+                <span
+                    id="humidity"
+                    class="detail-value"
+                >
+                    --%
+                </span>
+
+            </div>
+
+
+            <!-- Wind Speed -->
+
+            <div class="detail">
+
+                <div class="detail-left">
+
+                    <span class="detail-icon">
+                        ≋
+                    </span>
+
+                    <span class="detail-label">
+                        Wind Speed
+                    </span>
+
+                </div>
+
+
+                <span
+                    id="wind"
+                    class="detail-value"
+                >
+                    -- m/s
+                </span>
+
+            </div>
+
+
+            <!-- Wind Direction -->
+
+            <div class="detail">
+
+                <div class="detail-left">
+
+                    <span class="detail-icon">
+                        ↗
+                    </span>
+
+                    <span class="detail-label">
+                        Wind Direction
+                    </span>
+
+                </div>
+
+
+                <span
+                    id="direction"
+                    class="detail-value"
+                >
+                    --
+                </span>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         INFORMATION CARDS
+    ========================== -->
+
+    <section class="info-grid">
+
+
+        <!-- Clouds -->
+
+        <div class="info-card">
+
+            <div class="info-icon">
+                ☁
+            </div>
+
+            <div class="info-title">
+                Clouds
+            </div>
+
+            <div
+                id="clouds"
+                class="info-value"
+            >
+                --%
+            </div>
+
+        </div>
+
+
+        <!-- Visibility -->
+
+        <div class="info-card">
+
+            <div class="info-icon">
+                ◉
+            </div>
+
+            <div class="info-title">
+                Visibility
+            </div>
+
+            <div
+                id="visibility"
+                class="info-value"
+            >
+                -- km
+            </div>
+
+        </div>
+
+
+        <!-- Sunrise -->
+
+        <div class="info-card">
+
+            <div class="info-icon sunrise-icon">
+                ☀
+            </div>
+
+            <div class="info-title">
+                Sunrise
+            </div>
+
+            <div
+                id="sunrise"
+                class="info-value"
+            >
+                --:--
+            </div>
+
+        </div>
+
+
+        <!-- Sunset -->
+
+        <div class="info-card">
+
+            <div class="info-icon sunset-icon">
+                ☀
+            </div>
+
+            <div class="info-title">
+                Sunset
+            </div>
+
+            <div
+                id="sunset"
+                class="info-value"
+            >
+                --:--
+            </div>
+
+        </div>
+
+
+        <!-- Country -->
+
+        <div class="info-card">
+
+            <div class="info-icon">
+                📍
+            </div>
+
+            <div class="info-title">
+                Country
+            </div>
+
+            <div
+                id="countryCard"
+                class="info-value"
+            >
+                --
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         LAST UPDATED
+    ========================== -->
+
+    <div class="updated">
+
+        <span class="refresh-icon">
+            ⟳
+        </span>
+
+        <span>
+            Last updated:
+        </span>
+
+        <span id="updatedTime">
+            --
+        </span>
+
+    </div>
+
+</div>
+
+
+<script
+    src="{{ url_for('static', filename='script.js') }}"
+></script>
+
+</body>
+
+</html>

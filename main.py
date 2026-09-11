@@ -1,23 +1,67 @@
-from Weather import get_weather, display_weather
+from weather import (
+    get_weather,
+    display_weather
+)
 
-print("🌦 Welcome to Weather App")
 
-while True:
+def main():
 
-    city = input("\nEnter City Name: ")
+    print(
+        "🌦 Welcome to Weather App"
+    )
 
-    try:
 
-        data = get_weather(city)
+    while True:
 
-        display_weather(data)
+        city = input(
+            "\nEnter City Name: "
+        ).strip()
 
-    except Exception as e:
 
-        print("❌ Error:", e)
+        if not city:
 
-    choice = input("\nDo you want to search another city? (y/n): ")
+            print(
+                "❌ Please enter a city name."
+            )
 
-    if choice.lower() != "y":
-        print("\n👋 Thank You for using Weather App!")
-        break
+            continue
+
+
+        try:
+
+            data = get_weather(
+                city
+            )
+
+
+            display_weather(
+                data
+            )
+
+
+        except Exception as e:
+
+            print(
+                f"\n❌ Error: {e}"
+            )
+
+
+        choice = input(
+            "\nDo you want to search "
+            "another city? (y/n): "
+        ).strip().lower()
+
+
+        if choice != "y":
+
+            print(
+                "\n👋 Thank You for using "
+                "Weather App!"
+            )
+
+            break
+
+
+if __name__ == "__main__":
+
+    main()
